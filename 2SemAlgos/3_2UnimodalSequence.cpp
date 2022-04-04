@@ -8,10 +8,14 @@ using namespace std;
 // input 10                   output
 //1 2 3 4 5 6 7 6 5 4         6
 
-int find_number(vector<int> mass) {
-    int i = mass.size() / 2;
-    int left = 0;
-    int right = mass.size() - 1;
+long int find_number(vector<long int> mass) {
+    if (mass.size() == 2) {
+        if (mass[0] > mass[1]) { return 0; }
+        else { return 1; }
+    }
+    long int i = mass.size() / 2;
+    long int left = 0;
+    long int right = mass.size() - 1;
     while (!(mass[i - 1] < mass[i] &&  mass[i] > mass[i+1])) {
         if (mass[i] < mass[i+1]) {
             left = i;
@@ -22,24 +26,24 @@ int find_number(vector<int> mass) {
             i = left + (right - left) / 2;
         }
         if (i == 0) {
-            return mass[0];
+            return 0;
         }
         if (i == mass.size() - 1) {
-            return mass[mass.size() - 1];
+            return mass.size() - 1;
         }
         
     }
 
-    return mass[i];
+    return i;
 }
 
 int main()
 {
-    int n;
+    long int n;
     cin >> n;
-    vector<int> a;
-    int temp;
-    for (int i = 0; i < n; i++) {
+    vector<long int> a;
+    long int temp;
+    for (long int i = 0; i < n; i++) {
         cin >> temp;
         a.push_back(temp);
     }
