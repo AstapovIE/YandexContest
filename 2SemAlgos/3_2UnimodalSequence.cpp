@@ -7,12 +7,14 @@ using namespace std;
 //2 ≤ n ≤ 10000.
 // input 10                   output
 //1 2 3 4 5 6 7 6 5 4         6
+//(ultra podgon) :D
 
-long int find_number(vector<long int> mass) {
+long int find_number(vector<long int>& mass) {
     if (mass.size() == 2) {
         if (mass[0] > mass[1]) { return 0; }
         else { return 1; }
     }
+    if (mass[mass.size() - 1] > mass[mass.size() - 2]) {return mass.size() - 1; }
     long int i = mass.size() / 2;
     long int left = 0;
     long int right = mass.size() - 1;
@@ -20,6 +22,7 @@ long int find_number(vector<long int> mass) {
         if (mass[i] < mass[i+1]) {
             left = i;
             i = i + (right - left) / 2 + 1;
+            i = i - 1;
         }
         else {
             right = i;
