@@ -12,10 +12,11 @@ using namespace std;
 //2 4 5 7¶
 //4 6 1¶
 
-int find_index(vector<int> mass, int x) {
-    int index = mass.size()/2;
-    int left = 0;
-    int right = mass.size()-1;
+size_t find_index(vector<long int>& mass, long x) {
+    size_t index = mass.size()/2;
+    size_t left = 0;
+    size_t right = mass.size()-1;
+    if (mass[mass.size() - 1] < x) { return mass.size(); }
     while (mass[index] != x && !(mass[index] > x && mass[index - 1] < x)) {
         if (mass[index] < x) {
             left = index;
@@ -23,7 +24,7 @@ int find_index(vector<int> mass, int x) {
         }
         else {
             right = index;
-            index = (right - left) / 2;
+            index = left + (right - left) / 2;
         }
     }
 
@@ -32,29 +33,26 @@ int find_index(vector<int> mass, int x) {
 
 int main()
 {
-    int n;
-    int m;
+    size_t n;
+    size_t m;
     cin >> n;
     cin >> m;
-    vector<int> a;
-    int temp;
-    for (int i = 0; i < n; i++) {
+    vector<long int> a;
+    long int temp;
+    for (int i = 0; i < n; i++){
         cin >> temp;
         a.push_back(temp);
     }
-    vector<int> b;
-    for (int i = 0; i < m; i++) {
+    
+    for (size_t i = 0; i < m; i++) {
         cin >> temp;
-        b.push_back(temp);
-    }
-
-    for (int i = 0; i < m; i++) {
-        if (b[i] <= a[0]) {
+        if (temp <= a[0]) {
             cout << 0 << " ";
         }
-        else {
-            cout << find_index(a, b[i]) << " ";
+        else { 
+            cout << find_index(a, temp) << " ";
         }
+        
     }
 
 }
