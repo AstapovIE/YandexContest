@@ -6,7 +6,7 @@ using namespace std;
 //Для каждого элемента массива B[i] найдите минимальный индекс элемента массива A[k], ближайшего по значению к B[i].
 //n ≤ 110000, m ≤ 1000. Время работы поиска для каждого элемента B[i]: O(log(k)).
 
-int find_index(vector<int> mass, int x) {
+int find_index(vector<int>& mass, int x) {
     int i = mass.size() / 2;
     int left = 0;
     int right = mass.size() - 1;
@@ -45,14 +45,15 @@ int main()
     }
     int m;
     cin >> m;
-    vector<int> b;
-    for (int i = 0; i < m; i++) {
-        cin >> temp;
-        b.push_back(temp);
-    }
+    //vector<int> b;
+    //for (int i = 0; i < m; i++) {
+    //    cin >> temp;
+    //    b.push_back(temp);
+    // }
 
     for (int i = 0; i < m; i++) {
-        cout << find_index(a, b[i]) << " ";
+        cin >> temp;
+        cout << find_index(a, temp) << " ";
     }
 
 }
