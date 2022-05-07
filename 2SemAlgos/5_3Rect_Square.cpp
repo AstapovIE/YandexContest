@@ -1,4 +1,5 @@
 ﻿#include <vector>
+#include <map>
 #include <iostream>
 
 using namespace std;
@@ -17,57 +18,65 @@ using namespace std;
 M = 8
 */
 
-int find_sq(vector<int>& v, int x)
-{
-    int max = 0;
-    int n = v.size();
-    int i = 0;
-    while (i <= n) {
-        int sum = 0;
-        while (i != n && v[i] >= x) {
-            ++sum;
-            ++i;
-        }
-        if (sum > max) { max = sum; }
-        ++i;
-    }
-    return max * x;
-}
 
 int main()
 {
-    vector<int> v;
+    map<int, int> m;
+    map<int, int> res;
     int n;
     cin >> n;
-    int min = 10000;
-    int max = 0;
+
     
     int w;
     int h;
+
     for (int i = 0; i < n; ++i) {
         cin >> w;
         cin >> h;
-        if (h < min) { min = h; }
-        if (h > max) { max = h; }
-        for (int j = 0; j < w; ++j) {
-            v.push_back(h);
+        bool flag = true;
+        for(auto it = m.begin(); it != m.end(); ++it)
+        {
+            if (it->first <= h) {
+                m[it->first] += w * it->first;
+                if (it->first == h) { m[it->first] -= w * it->first; }
+            }
+            else {
+                if (m[h] == 0) {
+                    m[h] += h * (it->second / it->first);
+                    flag = false;
+                }
+                if (it->second > res[it->first]){
+                    res[it->first] = it->second;
+                }
+                m[it->first] = 0;
+            }
         }
+        m[h] += h * w;
         
+        //cout << "--m:--"<< endl;
+        //for (auto it = m.begin(); it != m.end(); ++it) {
+        //    cout << it->first << " : " << it->second << endl;
+        //}
+        //cout << "--res:--" << endl;
+        //for (auto it = res.begin(); it != res.end(); ++it) {
+        //    cout << it->first << " : " << it->second << endl;
+        //}
     }
-    n = v.size();
-
-    //for (int i = 0; i < n; ++i) {
-    //    cout << v[i] << endl;
+    
+    for (auto it = m.begin(); it != m.end(); ++it){
+        if (m[it->first] > res[it->first]) {
+            res[it->first] = it->second;
+        }
+    }
+    int M = 0;
+    for (auto it = res.begin(); it != res.end(); ++it) {
+        if (it->second > M) {
+            M = it->second;
+        }
+    }
+    cout << M << endl;
+    //for (auto it = res.begin(); it != res.end(); ++it) {
+    //    cout << it->first << " : " << it->second << endl;
     //}
 
-
-    int M = 0;
-    int curr;
-    while (min <= max)
-    {
-        curr = find_sq(v, min);
-        if (curr > M) { M = curr; }
-        ++min;
-    }
-    cout << M;
 }
